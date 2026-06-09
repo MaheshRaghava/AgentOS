@@ -16,7 +16,7 @@ app = FastAPI(
 )
 
 # ---------------------------------------------------------------------------
-# CORS — allow the React dev server + production Vercel URL
+# CORS — allow the React dev server + production Render URLs
 # ---------------------------------------------------------------------------
 
 app.add_middleware(
@@ -24,6 +24,8 @@ app.add_middleware(
     allow_origins=[
         settings.frontend_url,
         "https://*.vercel.app",
+        "https://*.onrender.com",  # Allow all Render frontends
+        "http://localhost:5173",
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -58,11 +60,33 @@ async def shutdown():
 
 
 # ---------------------------------------------------------------------------
+# Root route
+# ---------------------------------------------------------------------------
+
+@app.get("/", tags=["meta"])
+async def root():
+    """Root endpoint — API information"""
+    return {
+        "service": "AgentOS Backend",
+        "version": "0.1.0",
+        "status": "running",
+        "docs": "/docs",
+        "health": "/health",
+        "endpoints": {
+            "submit_goal": "POST /api/goal",
+            "get_run": "GET /api/runs/{run_id}",
+            "get_history": "GET /api/runs/history",
+            "websocket": "WS /api/ws/{run_id}"
+        }
+    }
+
+
+# ---------------------------------------------------------------------------
 # Routers
 # ---------------------------------------------------------------------------
 
 app.include_router(router, prefix="/api")
-app.include_router(ws_router, prefix="/api")  # ✅ ADD THIS LINE
+app.include_router(ws_router, prefix="/api")
 
 
 # ---------------------------------------------------------------------------
