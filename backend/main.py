@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Response
 from fastapi.middleware.cors import CORSMiddleware
 
 from config import settings
@@ -90,12 +90,18 @@ app.include_router(ws_router, prefix="/api")
 
 
 # ---------------------------------------------------------------------------
-# Health check
+# Health check — supports both GET and HEAD for uptime monitors
 # ---------------------------------------------------------------------------
 
 @app.get("/health", response_model=HealthResponse, tags=["meta"])
 async def health():
     return HealthResponse()
+
+
+@app.head("/health", tags=["meta"])
+async def health_head():
+    """HEAD request for uptime monitors (UptimeRobot, etc.)"""
+    return Response(status_code=200)
 
 
 # ---------------------------------------------------------------------------
