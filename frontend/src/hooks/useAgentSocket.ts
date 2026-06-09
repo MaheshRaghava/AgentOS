@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react'
 import { useRunStore } from '../store/runStore'
 
+const WS_BASE = import.meta.env.VITE_WS_URL || 'ws://localhost:8000'
+
 export interface TaskNode {
   id:           string
   name:         string
@@ -30,7 +32,7 @@ export function useAgentSocket(runId: string | null) {
       wsRef.current.close()
     }
 
-    const ws = new WebSocket(`ws://localhost:8000/api/ws/${runId}`)
+    const ws = new WebSocket(`${WS_BASE}/api/ws/${runId}`)
     wsRef.current = ws
 
     ws.onopen = () => {

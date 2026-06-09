@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useRunStore } from '../store/runStore'
 
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+
 const EXAMPLE_GOALS = [
   'Research the top 3 JavaScript frameworks and compare their pros and cons',
   'Write a Python function to find all prime numbers up to N using the Sieve of Eratosthenes',
@@ -21,7 +23,7 @@ export default function GoalInput() {
     addLogLine({ type: 'system', text: `Submitting goal: "${goal}"` })
 
     try {
-      const res = await fetch(`/api/goal`, {
+      const res = await fetch(`${API_BASE}/api/goal`, {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({ goal }),
