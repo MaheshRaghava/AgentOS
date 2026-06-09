@@ -1,0 +1,13 @@
+﻿fastapi
+uvicorn[standard]
+beautifulsoup4
+google-genai
+google-generativeai
+langgraph
+redis[hiredis]
+motor
+playwright
+pydantic-settings
+httpx
+python-dotenv
+tavily-python

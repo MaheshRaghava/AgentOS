@@ -1,0 +1,49 @@
+# Render deployment config — Source deployment (no Docker)
+# Place this in the ROOT of your repo (AgentOS/render.yaml)
+# Render reads this automatically when you connect the repo
+
+services:
+  - type: web
+    name: agentos-backend
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port 8000
+    plan: free
+
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false
+
+      - key: GEMINI_FLASH_MODEL
+        value: gemini-2.5-flash
+
+      - key: GEMINI_PRO_MODEL
+        value: gemini-2.5-pro
+
+      - key: REDIS_URL
+        sync: false
+
+      - key: MONGODB_URI
+        sync: false
+
+      - key: MONGODB_DB_NAME
+        value: agentos
+
+      - key: TAVILY_API_KEY
+        sync: false
+
+      - key: FRONTEND_URL
+        sync: false
+
+      - key: DEBUG
+        value: "false"
+
+  - type: web
+    name: agentos-frontend
+    runtime: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    pullRequestPreviewsEnabled: true
+    envVars:
+      - key: VITE_API_URL
+        value: https://agentos-backend.onrender.com
