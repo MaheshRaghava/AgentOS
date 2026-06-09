@@ -6,9 +6,9 @@ AgentOS is a production-grade multi-agent AI orchestration framework. A Planner 
 
 ## 🔗 Live Demo
 
-**Frontend:** https://agentos-frontend.onrender.com
+**Frontend:** https://agentos-frontend-rr15.onrender.com
 
-**Backend API:** https://agentos-backend.onrender.com
+**Backend API:** https://agentos-backend-zua4.onrender.com
 
 ---
 

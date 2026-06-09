@@ -1,7 +1,4 @@
-# Render deployment config — Source deployment (no Docker)
-# Place this in the ROOT of your repo (AgentOS/render.yaml)
-# Render reads this automatically when you connect the repo
-
+# Render deployment config — Source deployment
 services:
   - type: web
     name: agentos-backend
@@ -46,4 +43,4 @@ services:
     pullRequestPreviewsEnabled: true
     envVars:
       - key: VITE_API_URL
-        value: https://agentos-backend.onrender.com
+        value: https://agentos-backend-zua4.onrender.com/
